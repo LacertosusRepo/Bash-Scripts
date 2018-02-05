@@ -1,0 +1,54 @@
+#!/bin/bash
+G='\e[1;32m'
+R='\e[1;31m'
+C='\e[1;36m'
+W='\e[0;37m'
+P='\e[95m'
+NC='\e[0m'
+ERROR='\e[41m'
+PASS='\e[102m'
+
+# Remove Old Debs
+printf "\033c"
+echo -e "${W}Removing old ${P}.debs${W}..."
+echo
+find LacertosusRepo.github.io/debs -type f -name '*.deb' -delete
+rm -r LacertosusRepo.github.io/Packages.bz2
+sleep 2s
+
+# Package Debs
+echo -e "${W}Packaging new ${P}.debs${W}...${G}"
+echo
+./packages
+echo
+
+# Creating Packages & Packages.bz2 Files
+echo -e "${W}Creating ${P}Packages ${W}and ${P}Packages.bz2 ${W}files..."
+echo
+dpkg-scanpackages LacertosusRepo.github.io/debs > LacertosusRepo.github.io/Packages
+bzip2 -fks LacertosusRepo.github.io/Packages
+sleep 1s
+echo
+
+# Ask To Push To Github
+echo -e -n "${W}Want to push changes to ${P}Github${W}? [y/n]:${G} "
+read answer
+echo
+case ${answer:0:1} in
+	y|Y )
+	echo -e -n "${W}Push to ${P}Github ${W}with commit:${G} "
+	read gitcommit
+	echo
+	cd LacertosusRepo.github.io
+	git add --all
+	git commit -m "$gitcommit"
+	git push
+	echo
+	echo -e "${W}${PASS}Done!${NC}"
+	echo
+	;;
+	* )
+	echo -e "${W}${PASS}Done!${NC}"
+	echo
+	;;
+esac
