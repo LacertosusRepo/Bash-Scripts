@@ -1,9 +1,9 @@
 #!/bin/bash
-GREEN='\e[1;32m'
-RED='\e[1;31m'
-CYAN='\e[1;36m'
-WHITE='\e[0;37m'
-PURPLE='\e[95m'
+G='\e[1;32m'
+R='\e[1;31m'
+C='\e[1;36m'
+W='\e[0;37m'
+P='\e[95m'
 NC='\e[0m'
 ERROR='\e[41m'
 PASS='\e[102m'
@@ -11,17 +11,17 @@ PASS='\e[102m'
 # Prerequisites
 printf "\033c"
 echo
-echo -e "    ${WHITE}|===========================================================|"
-echo -e "    ${WHITE}|	Whoa, whoa, whoa, slow down there cowboy. Do you have   |"
-echo -e "    ${WHITE}|	this package installed? ${RED}'dos2unix'${WHITE}                      |"
-echo -e "    ${WHITE}|	If not, run ${GREEN}'apt-get install dos2unix'${WHITE}			|"
-echo -e "    ${WHITE}|===========================================================|"
+echo -e "    ${W}|===========================================================|"
+echo -e "    ${W}|	Whoa, whoa, whoa, slow down there cowboy. Do you have   |"
+echo -e "    ${W}|	this package installed? ${R}'dos2unix'${W}                      |"
+echo -e "    ${W}|	If not, run ${G}'apt-get install dos2unix'${W}			|"
+echo -e "    ${W}|===========================================================|"
 echo
 
 # Get sudo Priveledge
 if [[ $EUID != 0 ]]
 then
-	echo -e -n "${GREEN}"
+	echo -e -n "${G}"
 	sudo "$0" "$@"
 	exit $?
 	echo -e -n "${NC}"
@@ -29,36 +29,36 @@ fi
 
 # Check For Arguments
 version=$1
-string1="${CYAN}Insert the name of the file that has issues: ${NC}"
-string2="${RED}Making backup file just incase...${NC}"
-string3="${RED}Deleting old file that has issues...${NC}"
+string1="${C}Insert the name of the file that has issues: ${NC}"
+string2="${R}Making backup file just incase...${NC}"
+string3="${R}Deleting old file that has issues...${NC}"
 if  [[ $1 == "-c" ]]
 then
-	string1="${CYAN}Insert the name of the file that has issues: ${NC}"
-	string2="${RED}Making backup file just incase...${NC}"
-	string3="${RED}Deleting old file that has issues...${NC}"
+	string1="${C}Insert the name of the file that has issues: ${NC}"
+	string2="${R}Making backup file just incase...${NC}"
+	string3="${R}Deleting old file that has issues...${NC}"
 
 elif [[ $1 == "-e" ]]
 then
-	string1="${CYAN}Insert the name of the file you fucked up: ${NC}"
-	string2="${RED}Making backup file incase I fuck shit up...${NC}"
-	string3="${RED}Deleting old file that YOU fucked up...${NC}"
+	string1="${C}Insert the name of the file you fucked up: ${NC}"
+	string2="${R}Making backup file incase I fuck shit up...${NC}"
+	string3="${R}Deleting old file that YOU fucked up...${NC}"
 
 elif [[ $1 == "--help" ]]
 then
 	echo
-	echo -e "	${WHITE}Arguments:"
-	echo -e "	${PURPLE}-c  --cleantext      Doesnt use any explicit language"
-	echo -e "	${PURPLE}-e  --explicittext   Uses what I truley love, anger"
+	echo -e "	${W}Arguments:"
+	echo -e "	${P}-c  --cleantext      Doesnt use any explicit language"
+	echo -e "	${P}-e  --explicittext   Uses what I truley love, anger"
 	echo
 	exit 1
 fi
 
 # Ask For Filename
 echo "List of Files:"
-echo -e -n "${PURPLE}"
+echo -e -n "${P}"
 ls -p | grep -v /
-echo -e "${WHITE}\____________________/"
+echo -e "${W}\____________________/"
 echo
 echo -e -n $string1
 read filevar
@@ -67,15 +67,15 @@ echo
 # Check If File Was Found
 if [[ $filevar == "" ]]
 then
-	echo  -e "${WHITE}${ERROR}You're supposed to instert a file...${NC}"
+	echo  -e "${W}${ERROR}You're supposed to instert a file...${NC}"
 	echo
 	exit 1
 elif [[ -e $filevar ]]
 then
-	echo -e "${WHITE}${PASS}File Found!${NC}"
+	echo -e "${W}${PASS}File Found!${NC}"
 	echo
 else
-	echo -e "${WHITE}${ERROR}File not found! Make sure you entered the correct name!${NC}"
+	echo -e "${W}${ERROR}File not found! Make sure you entered the correct name!${NC}"
 	echo
 	exit 1
 fi
@@ -87,12 +87,12 @@ sudo cp $filevar fixfile.backup
 echo
 
 # Fix Format
-echo -e "${RED}Fixing $filevar's format...${NC}"
+echo -e "${R}Fixing $filevar's format...${NC}"
 sudo dos2unix $filevar
 echo
 
 # Copy File
-echo -e "${RED}Creating duplicate file...${NC}"
+echo -e "${R}Creating duplicate file...${NC}"
 sudo cat $filevar > fixfile.old
 echo
 
@@ -102,12 +102,12 @@ sudo rm $filevar
 echo
 
 # Renaming New File
-echo -e -n "${CYAN}Insert the name of the new file: ${NC}"
+echo -e -n "${C}Insert the name of the new file: ${NC}"
 read filenamevar
 if [[ $filenamevar == "" ]]
 then
 	echo
-	echo -e -n "${WHITE}Using original file name...${NC}"
+	echo -e -n "${W}Using original file name...${NC}"
 	mv fixfile.old $filevar
 	echo
 	echo
@@ -117,19 +117,19 @@ else
 fi
 
 # Ask To Delete Backup File
-echo -e -n "${PURPLE}Delete backup?${WHITE} (y/n): ${NC}"
+echo -e -n "${P}Delete backup?${W} (y/n): ${NC}"
 read answer
 case ${answer:0:1} in
 	y|Y )
 	sudo rm fixfile.backup
 	;;
 	* )
-	echo -e ${PURPLE}Ok, Ok! Chill...${NC}
+	echo -e ${P}Ok, Ok! Chill...${NC}
 	mv fixfile.backup ${filenamevar}.backup
 	;;
 esac
 echo
 
 # Finish
-echo -e "${WHITE}${PASS}Done :)${NC}"
+echo -e "${W}${PASS}Done :)${NC}"
 echo
