@@ -1,10 +1,13 @@
 #!/bin/bash
 # /-----------------------------------\
-# 	Definitly a script custom
-# 	to my setup. Edit
-#	it to your needs
+# 	Blah, blah, blah I wrote
+# 	this script, something
+#	something, use as you
+#       like.
 #		-Lacertosus
 # \___________________________________/
+
+# NOTE: this is HEAVILY customized to my setup, so you will have to edit it
 
 G='\e[1;32m' #Green
 R='\e[1;31m' #Red
