@@ -1,4 +1,13 @@
 #!/bin/bash
+# /-----------------------------------\
+# 	Blah, blah, blah I wrote
+# 	this script, something
+#	something, use as you
+#       like.
+#		-Lacertosus
+# \___________________________________/
+
+#!/bin/bash
 G='\e[1;32m'
 R='\e[1;31m'
 C='\e[1;36m'
