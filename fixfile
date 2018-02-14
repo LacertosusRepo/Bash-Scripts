@@ -1,10 +1,10 @@
 #!/bin/bash
 # /-----------------------------------\
-# 	     Blah, blah, blah I wrote
-# 	     this script, something
-#	     something, use as you
+# 	Blah, blah, blah I wrote
+# 	this script, something
+#	something, use as you
 #       like.
-#		              -Lacertosus
+#		-Lacertosus
 # \___________________________________/
 
 G='\e[1;32m'
