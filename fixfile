@@ -1,11 +1,11 @@
 #!/bin/bash
-# /-----------------------------------\
-# 	Blah, blah, blah I wrote
-# 	this script, something
-#	something, use as you
-#       like.
-#		-Lacertosus
-# \___________________________________/
+#	 /-----------------------------------\
+#	 	Blah, blah, blah I wrote
+#	 	this script, something
+#		something, use as you
+#	       like.
+#			-Lacertosus
+#	 \___________________________________/
 
 G='\e[1;32m'
 R='\e[1;31m'
@@ -40,24 +40,35 @@ version=$1
 string1="${C}Insert the name of the file that has issues: ${NC}"
 string2="${R}Making backup file just incase...${NC}"
 string3="${R}Deleting old file that has issues...${NC}"
-if  [[ $1 == "-c" ]]
+if  [[ $1 == "-e" ]]
 then
-	string1="${C}Insert the name of the file that has issues: ${NC}"
-	string2="${R}Making backup file just incase...${NC}"
-	string3="${R}Deleting old file that has issues...${NC}"
-
-elif [[ $1 == "-e" ]]
-then
-	string1="${C}Insert the name of the file you fucked up: ${NC}"
-	string2="${R}Making backup file incase I fuck shit up...${NC}"
-	string3="${R}Deleting old file that YOU fucked up...${NC}"
-
+	if [[ $2 == "" ]]
+	then
+		echo  -e "${W}${ERROR}You're supposed to instert a file...${NC}, exiting..."
+		exit 1
+	elif [[ -e $2 ]]
+	then
+		sudo dos2unix $2
+		sudo cat $2 > fixfile.old
+		sudo rm $2
+		mv fixfile.old $2
+		echo -e "${W}${PASS}Done :)${NC}"
+		exit 1
+	else
+		echo -e "${W}${ERROR}File not found! Make sure you entered the correct name! Exiting...${NC}"
+		exit 1
+	fi
 elif [[ $1 == "--help" ]]
 then
 	echo
 	echo -e "	${W}Arguments:"
-	echo -e "	${P}-c  --cleantext      Doesnt use any explicit language"
-	echo -e "	${P}-e  --explicittext   Uses what I truley love, anger"
+	echo -e "	${P}-e  --express    Quickly fix a file, but wont make a backup."
+	echo -e "	${P}-h  --help       Displays... this message..."
+	echo
+	echo -e "	${W}------------------------------------------------------------"
+	echo
+	echo -e "	${P}Use:"
+	echo -e "	${P}-e:  'fixfile -e FILENAME'"
 	echo
 	exit 1
 fi
