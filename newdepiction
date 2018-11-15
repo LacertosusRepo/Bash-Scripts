@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# make new depiction folder
+echo -e -n "Name of tweak/theme (lowercase): "
+read packagename
+cp -R ~/Dev/Repo/LacertosusRepo.github.io/depictions/_com.lacertosusrepo.template ~/Dev/Repo/LacertosusRepo.github.io/depictions/com.lacertosusrepo.$packagename
+
+# replace name of tweak/theme
+echo -e -n "Display name: "
+read displayname
+sed -i'.old' "s/@@NAME@@/$displayname/g" ~/Dev/Repo/LacertosusRepo.github.io/depictions/com.lacertosusrepo.$packagename/index.html
+sed -i'.old' "s/@@NAME@@/$displayname/g" ~/Dev/Repo/LacertosusRepo.github.io/depictions/com.lacertosusrepo.$packagename/changelog.html
+rm ~/Dev/Repo/LacertosusRepo.github.io/depictions/com.lacertosusrepo.$packagename/*.old
+
+# replace description
+echo -e -n "Package description: "
+read description
+sed -i'.old' "s/@@DESCRIPTION@@/$description/g" ~/Dev/Repo/LacertosusRepo.github.io/depictions/com.lacertosusrepo.$packagename/index.html
+rm ~/Dev/Repo/LacertosusRepo.github.io/depictions/com.lacertosusrepo.$packagename/*.old
+
+# replace min and max compatibility
+echo -e -n "Max iOS compatibility: "
+read maxios
+sed -i'.old' "s/@@MAX@@/$maxios/g" ~/Dev/Repo/LacertosusRepo.github.io/depictions/com.lacertosusrepo.$packagename/index.html
+rm ~/Dev/Repo/LacertosusRepo.github.io/depictions/com.lacertosusrepo.$packagename/*.old
+
+echo -e -n "Min iOS compatibility: "
+read minios
+sed -i'.old' "s/@@MIN@@/$minios/g" ~/Dev/Repo/LacertosusRepo.github.io/depictions/com.lacertosusrepo.$packagename/index.html
+rm ~/Dev/Repo/LacertosusRepo.github.io/depictions/com.lacertosusrepo.$packagename/*.old
+
+# replace date in changelog
+echo -e -n "Date of release (MM/DD/YYYY): "
+read date
+sed -i'.old' "s/@@DATE@@/$date/g" ~/Dev/Repo/LacertosusRepo.github.io/depictions/com.lacertosusrepo.$packagename/index.html
+rm ~/Dev/Repo/LacertosusRepo.github.io/depictions/com.lacertosusrepo.$packagename/*.old
