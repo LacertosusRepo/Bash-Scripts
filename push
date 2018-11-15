@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# remove old debs and packages file
+find ~/Dev/Repo/LacertosusRepo.github.io/debs -type f -name '*.deb' -delete
+rm ~/Dev/Repo/LacertosusRepo.github.io/Packages.bz2
+
+# move new debs to folder
+find ~/Dev/Repo/packages -type f -name '*.deb' -exec cp {} ~/Dev/Repo/LacertosusRepo.github.io/debs/ \;
+
+# create Packages and Packages.bz2 files
+dpkg-scanpackages LacertosusRepo.github.io/debs > LacertosusRepo.github.io/Packages
+bzip2 -fks ~/Dev/Repo/LacertosusRepo.github.io/Packages
+
+# push to github
+cd ~/Dev/Repo/LacertosusRepo.github.io
+git add --all
+git commit -m "Repo Update"
+git push
