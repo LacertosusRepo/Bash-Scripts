@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# pull repo
+cd ~/Dev/Repo/LacertosusRepo.github.io
+git pull
