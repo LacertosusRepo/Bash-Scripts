@@ -30,7 +30,7 @@ sed -i'.old' "s/@@MIN@@/$minios/g" ~/Dev/Repo/LacertosusRepo.github.io/depiction
 rm ~/Dev/Repo/LacertosusRepo.github.io/depictions/com.lacertosusrepo.$packagename/*.old
 
 # replace date in changelog
-echo -e -n "Date of release (MM/DD/YYYY): "
-read date
-sed -i'.old' "s/@@DATE@@/$date/g" ~/Dev/Repo/LacertosusRepo.github.io/depictions/com.lacertosusrepo.$packagename/index.html
+echo -e -n "Setting date of release... "
+date=$(date +%m/%d/%Y)
+sed -i'.old' "s=@@DATE@@="$date"=g" ~/Dev/Repo/LacertosusRepo.github.io/depictions/com.lacertosusrepo.$packagename/index.html
 rm ~/Dev/Repo/LacertosusRepo.github.io/depictions/com.lacertosusrepo.$packagename/*.old
