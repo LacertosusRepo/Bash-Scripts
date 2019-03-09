@@ -11,8 +11,17 @@ find ~/Dev/Repo/packages -type f -name '*.deb' -exec cp {} ~/Dev/Repo/Lacertosus
 dpkg-scanpackages LacertosusRepo.github.io/debs > LacertosusRepo.github.io/Packages
 bzip2 -fks ~/Dev/Repo/LacertosusRepo.github.io/Packages
 
+# remove DS_Store files
+find . -name '.DS_Store' -type f -delete
+
 # push to github
+echo -e -n "Commit Message: "
+read commitmessage
 cd ~/Dev/Repo/LacertosusRepo.github.io
 git add --all
-git commit -m "Repo Update"
+if [ -z "$commitmessage" ]; then
+  git commit -m "Repository Update"
+else
+  git commit -m "$commitmessage"
+fi
 git push
